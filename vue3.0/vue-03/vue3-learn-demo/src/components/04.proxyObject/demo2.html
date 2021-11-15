@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+  <script>
+    //  数据源
+    let person = {
+      name: "kangkang",
+      age: 20,
+      brandList: {
+        group: {title: "宝马"}
+      }
+    }
+
+    // p对象 对person对象的代理对象
+    // 对 p对象 进行的所有操作都会映射到代理person对象上
+    const p = new Proxy(person, {
+      //  获取对象属性
+      get(target,property) {
+        console.log("拦截了获取操作");
+        return target[property];
+      },
+      // 设置对象属性
+      set(target, property, value ) {
+        console.log("拦截到了设置或新增操作");
+        target[property] = value;
+      },
+      //  删除属性操作
+      deleteProperty(target, property) {
+        console.log("拦截到了删除属性操作");
+        return delete target[property];
+      }
+    })
+    // 拦截了获取操作
+    console.log(p.name);// kangkang
+    p.name = "康康";// 拦截到了设置或新增操作
+    delete p.name// 拦截到了删除属性操作
+    console.log(person)
+  </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+  let person = {name: "kangkang", age: 20}
+  // 第一个参数 是要代理的对象 第二个是回调函数 一定要有，如果没有操作一定要传入一个空对象
+  // 对 p 对象进行的所有操作都会映射到 person 对象
+  const p = new Proxy(person, {})
+  console.log(p)  // Proxy { name: "张三", age: 20 }
+  p.name = "康康"
+  // 输出数据源对象中的name
+  console.log(person.name) // 康康
+  // 删除代理对象中的属性
+  delete p.age
+  console.log(person)
+  // 增加代理对象中的属性
+  p.sex = "🚹"
+  console.log(person)
+</script>
+</body>
+</html>
