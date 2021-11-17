@@ -9,7 +9,7 @@ const instanceWithOutToken = axios.create({ baseURL });
 // 创建请求实例对象 （包含请求对象）
 const instanceWithToken = axios.create({ baseURL });
 
-// 配置请求拦截器 携带token
+//#region  配置请求拦截器 携带token
 instanceWithToken.interceptors.request.use((config) => {
   //判断token是否存在
   const token = store.state.user.profile.token;
@@ -19,8 +19,9 @@ instanceWithToken.interceptors.request.use((config) => {
   }
   return config;
 });
+//#endregion
 
-//  通过请求拦截器 精简数据层级
+//#region  通过请求拦截器 精简数据层级
 instanceWithToken.interceptors.response.use(
   (response) => {
     return response.data;
@@ -43,3 +44,40 @@ instanceWithToken.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+//#endregion
+
+//#region  请求拦截器（不带带Token） 竞价数据层级
+instanceWithOutToken.interceptors.response.use((response) => response.data);
+//#endregion
+
+//#region  用于发送请求的函数
+/**
+ * 封装Ajax方法
+ * @param url 请求地址
+ * @param method 请求方法
+ * @param data 请求数据
+ * @returns {{[p: string]: *, method, url}}
+ */
+function generateRequestConfig(url, method, data) {
+  return {
+    url,
+    method,
+    [method === "get" ? "params" : "data"]: data,
+  };
+}
+
+//#endregion
+
+//#region  用于发送携带token的请求
+export function requestWithToken(url, method, data) {
+  instanceWithToken(generateRequestConfig(url, method, data));
+}
+
+//#endregion
+
+//#region  发送普通请求 无token
+export function requestWithOutToken(url, method, data) {
+  return instanceWithOutToken(generateRequestConfig(url, method, data));
+}
+
+//#endregion

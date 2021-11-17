@@ -1,21 +1,17 @@
 <template>
-  {{ $store.state.user.profile }}
-  <button @click="handle">按钮</button>
+  <div class="box">康康</div>
+  <router-view></router-view>
 </template>
 <script>
-import { useStore } from "vuex";
-
 export default {
   setup() {
-    const store = useStore();
-    const handle = () => {
-      store.commit("user/setUser", { token: "test" });
-    };
-    return {
-      handle,
-    };
+    return {};
   },
 };
 </script>
 
-<style lang="less"></style>
+<style lang="less">
+.box {
+  color: @xtxColor;
+}
+</style>

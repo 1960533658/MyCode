@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+        name="viewport">
+  <meta content="ie=edge" http-equiv="X-UA-Compatible">
+  <title>Document</title>
+</head>
+<body>
+<script>
+  async function p1() {
+    // return "p1 success";
+
+    // 抛出错误
+    throw new Error("p1 failed");
+  }
+
+  async function p2() {
+    // return "p2 success";
+
+    // 抛出错误
+    throw new Error("p2 failed");
+  }
+
+  // 异步函数的返回值是 promise
+  p1()
+    .then(data => {
+      console.log(data); // p1.success
+      return p2();
+      //  失败的回调函数
+    }, (reason) => {
+      // 输出报错
+      console.log(reason);
+      return p2();
+    })
+    .then(data => {
+      console.log(data);
+    }, reason => {
+      console.log(reason);
+    });
+</script>
+</body>
+</html>
