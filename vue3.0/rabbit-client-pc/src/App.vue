@@ -1,5 +1,4 @@
 <template>
-  <div class="box">康康</div>
   <router-view></router-view>
 </template>
 <script>
@@ -10,8 +9,4 @@ export default {
 };
 </script>
 
-<style lang="less">
-.box {
-  color: @xtxColor;
-}
-</style>
+<style lang="less"></style>

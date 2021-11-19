@@ -1,15 +1,20 @@
 <template>
   <AppLayout>
-    <template v-slot:default> HomePage</template>
+    <template v-slot:default>
+      <div class="container">
+        <HomeCategory />
+      </div>
+    </template>
   </AppLayout>
 </template>
 
 <script>
-import AppLayout from "./AppLayout";
+import AppLayout from "../../components/AppLayout";
+import HomeCategory from "./components/HomeCategory";
 
 export default {
   name: "HomePage",
-  components: { AppLayout },
+  components: { HomeCategory, AppLayout },
 };
 </script>
 
