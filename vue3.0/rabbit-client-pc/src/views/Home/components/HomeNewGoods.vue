@@ -1,10 +1,10 @@
 <template>
-  <HomePanel subTitle="新鲜出炉 品质靠谱" title="新鲜好物">
+  <HomePanel ref="target" subTitle="新鲜出炉 品质靠谱" title="新鲜好物">
     <template v-slot:right>
       <XtxMore />
     </template>
     <template v-slot:default>
-      <ul class="goods-list">
+      <ul v-if="newGoodsList" class="goods-list">
         <li v-for="item in newGoodsList" :key="item.id">
           <RouterLink to="/">
             <img :src="item.picture" alt="" />
@@ -13,34 +13,26 @@
           </RouterLink>
         </li>
       </ul>
+      <Transition>
+        <HomeSkeleton v-if="!newGoodsList" />
+      </Transition>
     </template>
   </HomePanel>
 </template>
 <script>
 import HomePanel from "./HomePanel";
-import { ref } from "vue";
 import { getNewGoodsApi } from "../../../api/home";
+import useLazyData from "../../../hooks/useLazyData";
+import HomeSkeleton from "./HomeSkeleton";
 
 export default {
   name: "HomeNewGoods",
-  components: { HomePanel },
+  components: { HomeSkeleton, HomePanel },
   setup() {
-    const { newGoodsList, getData } = useHomeNew();
-    getData();
-    return { newGoodsList };
+    const { target, result: newGoodsList } = useLazyData(getNewGoodsApi);
+    return { newGoodsList, target };
   },
 };
-
-// 获取新鲜好物数据
-function useHomeNew() {
-  const newGoodsList = ref(null);
-  const getData = () => {
-    getNewGoodsApi().then((data) => {
-      newGoodsList.value = data.result;
-    });
-  };
-  return { newGoodsList, getData };
-}
 </script>
 <style lang="less" scoped>
 .goods-list {

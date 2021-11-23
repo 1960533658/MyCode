@@ -1,6 +1,7 @@
 import XtxSkeleton from "./XtxSkeleton";
 import XtxCarousel from "./XtxCarousel";
 import XtxMore from "./XtxMore";
+import lazy from "../directives/lazy";
 
 const library = {
   install(app) {
@@ -10,6 +11,8 @@ const library = {
     app.component(XtxCarousel.name, XtxCarousel);
     // 查看更多组件 挂载
     app.component(XtxMore.name, XtxMore);
+    // 图片懒加载指令 挂载
+    app.directive("lazy", lazy);
   },
 };
 

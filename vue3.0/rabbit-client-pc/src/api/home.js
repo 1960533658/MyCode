@@ -48,3 +48,36 @@ export function getNewGoodsApi(limit = 4) {
 }
 
 //#endregion
+
+//#region 首页——人气推荐数据
+/**
+ * 获取人气推荐数据
+ * @returns {Promise}
+ */
+export function getHomeHotApi() {
+  return requestWithOutToken("/home/hot", "get");
+}
+
+//#endregion
+
+//#region  首页--最新专题数据
+/**
+ * 获取最新专题数据
+ * @returns {Promise}
+ */
+export function getHomeSpecialApi() {
+  return requestWithOutToken("/home/special", "get");
+}
+
+//#endregion
+
+//#region  首页——产品区块
+/**
+ * 获取产品区块数据
+ * @returns {Promise}
+ */
+export function getHomeGoodsApi() {
+  return requestWithOutToken("/home/goods", "get");
+}
+
+//#endregion

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<div id="box">box</div>
+<script>
+  const box = document.getElementById("box");
+  // 监听对象
+  const observer = new IntersectionObserver(([{ isIntersecting }]) => {
+    console.log(isIntersecting);
+    if (isIntersecting) {
+      // 停止监听元素
+      observer.unobserve(box);
+    }
+  });
+  // 指定监听的元素
+  observer.observe(box);
+</script>
+</body>
+</html>
