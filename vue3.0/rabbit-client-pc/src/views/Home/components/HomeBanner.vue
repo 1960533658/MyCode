@@ -9,29 +9,16 @@
   </div>
 </template>
 <script>
-import { getBannersApi } from "../../../api/home";
-import { ref } from "vue";
+import useBanners from "../../../hooks/useBanners";
 
 export default {
   name: "HomeBanner",
   setup() {
     const { bannerList, getBannerData } = useBanners();
-    getBannerData();
+    getBannerData(1);
     return { bannerList };
   },
 };
-
-function useBanners() {
-  const bannerList = ref(null);
-
-  const getBannerData = () => {
-    getBannersApi().then((data) => {
-      bannerList.value = data.result;
-    });
-  };
-
-  return { bannerList, getBannerData };
-}
 </script>
 <style lang="less" scoped>
 .home-banner {
