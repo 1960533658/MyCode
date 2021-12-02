@@ -17,7 +17,7 @@ const library = {
     app.directive("lazy", lazy);
     keys.forEach((item) => {
       const component = importFn(item).default;
-      console.log(component.name);
+      // console.log(component.name);
       app.component(component.name, component);
     });
   },

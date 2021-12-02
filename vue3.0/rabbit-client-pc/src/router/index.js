@@ -16,6 +16,10 @@ const routes = [
 
 const router = createRouter({
   history: createWebHashHistory(),
+  // 路由刷新让页面自动滚动到首页
+  scrollBehavior() {
+    return { top: 0 };
+  },
   routes,
 });
 

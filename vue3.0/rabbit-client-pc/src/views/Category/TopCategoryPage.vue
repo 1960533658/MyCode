@@ -1,6 +1,7 @@
 <template>
   <AppLayout>
     <div class="container">
+      <!-- 面包屑 -->
       <XtxBrand>
         <XtxBrandItem path="/">首页</XtxBrandItem>
         <Transition mode="out-in" name="fade-right">
@@ -11,7 +12,15 @@
           </XtxBrandItem>
         </Transition>
       </XtxBrand>
+      <!-- 轮播图 -->
       <XtxCarousel :bannerList="bannerList" :style="{ height: '500px' }" />
+      <!-- 全部二级分类 -->
+      <ShowSubCategoryList
+        v-if="topBreadCategory?.children"
+        :topCategoryList="topBreadCategory.children"
+      />
+      <!-- 二级推荐商品 -->
+      <CommandGoods />
     </div>
   </AppLayout>
 </template>
@@ -23,10 +32,12 @@ import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import { computed } from "vue";
 import useBanners from "../../hooks/useBanners";
+import ShowSubCategoryList from "./components/ShowCategoryList";
+import CommandGoods from "./components/RecommendGoods";
 
 export default {
   name: "TopCategoryPage",
-  components: { XtxBrandItem, AppLayout },
+  components: { CommandGoods, ShowSubCategoryList, XtxBrandItem, AppLayout },
   setup() {
     const topBreadCategory = useCategory();
     //#region  获取轮播图数据
