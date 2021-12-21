@@ -3,7 +3,7 @@
     <h3>全部分类</h3>
     <ul>
       <li v-for="item in topCategoryList" :key="item">
-        <router-link :to="`category/sub/${item.id}`">
+        <router-link :to="`/category/sub/${item.id}`">
           <img :alt="item.name" :src="item.picture" />
           <p>{{ item.name }}</p>
         </router-link>
