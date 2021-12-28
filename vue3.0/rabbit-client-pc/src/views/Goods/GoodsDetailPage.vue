@@ -30,6 +30,7 @@
               v-if="goodsDetailList"
               :skus="goodsDetailList.skus"
               :specs="goodsDetailList.specs"
+              @onSpecChange="onSpecChange"
             />
           </div>
         </div>
@@ -77,9 +78,20 @@ export default {
     const { goodsDetailList, getData } = useGoodsDetail();
 
     //#endregion
+
+    //#region  当用户选择完整的规格之后 更新视图
+    function onSpecChange(data) {
+      console.log(data);
+      goodsDetailList.value.price = data.price;
+      goodsDetailList.value.oldPrice = data.oldPrice;
+      goodsDetailList.value.inventory = data.inventory;
+    }
+
+    //#endregion
     return {
       goodsDetailList,
       getData,
+      onSpecChange,
     };
   },
 };
@@ -102,6 +114,7 @@ function useGoodsDetail() {
   onBeforeRouteUpdate((to) => {
     getData(to.params.id);
   });
+
   return {
     goodsDetailList,
     getData,

@@ -37,8 +37,12 @@ export default {
       type: Array,
       default: () => [],
     },
+    skuId: {
+      type: String,
+      default: "",
+    },
   },
-  setup(props) {
+  setup(props, { emit }) {
     //#region  图片选中状态切换
     const updateSelected = (item, value) => {
       // 如果当前规格是已被禁用的 禁止代码继续执行
@@ -52,25 +56,28 @@ export default {
       } else {
         item.values.forEach((values) => {
           values.selected = false;
-          console.log(values.selected);
         });
         value.selected = true;
       }
-      console.log(value.selected);
+      // 当用于更新选中状态的时候耶要更新禁用状态
+      updateDisable(props.specs, pathMap);
+
+      sendDateToParent(props.specs, pathMap, props.skus, emit);
     };
     //#endregion
 
     //#region  规格禁用状态
     const pathMap = createPathMap(props.skus);
-    console.log(pathMap);
+    // 更新禁止选中状态
     updateDisable(props.specs, pathMap);
+    // 设置默认选中规格
+    setDefaultSelected(props.skuId, props.specs, props.skus);
     //#endregion
     return {
       updateSelected,
     };
   },
 };
-
 //#region  创建规格查询对象
 const createPathMap = (skus) => {
   // 创建规格查询对象
@@ -100,14 +107,21 @@ const createPathMap = (skus) => {
   });
   return pathMap;
 };
-
 //#endregion
+
+//#region  更新规格禁用状态
 function updateDisable(specs, pathMap) {
-  specs.forEach((spec) => {
+  specs.forEach((spec, index) => {
+    // 更新用户选择的规格
+    const selected = getSelected(specs);
     spec.values.forEach((value) => {
-      console.log(value.name);
-      // 如果规格查询对象中当前对象的职位null或者没有这个对象
-      if (!pathMap[value.name]) {
+      // 判断当前规格是否是用户选中的 如果是 就没必要添加到用户选择的数组中
+      if (value.selected) return;
+      // 将当前遍历到的规格存储到 selected 数组中
+      selected[index] = value.name;
+      const key = selected.filter((item) => item).join("_");
+      if (!(key in pathMap)) {
+        // 如果规格查询对象中当前对象的职位null或者没有这个对象
         // 禁用当前单个规格
         value.disabled = true;
       }
@@ -115,7 +129,68 @@ function updateDisable(specs, pathMap) {
   });
 }
 
-//#region  更新规格禁用状态
+//#endregion
+
+//#region  获取用户选择的规格
+function getSelected(specs) {
+  const result = [];
+  specs.forEach((spec, index) => {
+    const selected = spec.values.find((item) => item.selected);
+    if (selected) {
+      result[index] = selected.name;
+    } else {
+      result[index] = undefined;
+    }
+  });
+  return result;
+}
+
+//#endregion
+
+//#region  设置规格的默认选中效果
+/**
+ *设置规格的默认选中效果
+ * @param skuId 规格Id
+ * @param skus 当前规格所有可选择的规格名称
+ * @param specs 即将被设置状态的名称
+ */
+function setDefaultSelected(skuId, skus, specs) {
+  if (!skuId) return;
+  const target = skus.find((sku) => sku.id === skuId);
+  const names = target.specs.map((spec) => spec.valueName);
+  specs.forEach((spec) => {
+    spec.values.forEach((value) => {
+      if (names.includes(value.name)) {
+        value.selected = true;
+      }
+    });
+  });
+}
+
+//#endregion
+
+//#region  将用户选择的规格组件传递给父组件以 给 购物车 以备使用
+function sendDateToParent(specs, pathMap, skus, emit) {
+  // 获取用户选择的规格
+  const selected = getSelected(specs).filter((item) => item);
+  //  判断用户选择的规格是否完整 完整的话传递给父元素
+  if (selected.length === specs.length) {
+    const skuId = pathMap[selected.join("_")];
+    // 根据 skuId 在所有可组合的规格集合中查找规格对象
+    const target = skus.find((sku) => sku.id === skuId);
+    //  将规格数据传递到父组件
+    emit("onSpecChange", {
+      // 商品规格Id 将商品加入购物车使用
+      skuId,
+      // 现价 更新视图
+      price: target.price,
+      // 原价 更新视图
+      oldPrice: target.oldPrice,
+      // 商品的库存 在用户更改商品数量时使用
+      inventory: target.inventory,
+    });
+  }
+}
 
 //#endregion
 </script>

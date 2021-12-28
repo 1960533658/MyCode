@@ -1,8 +1,9 @@
 import axios from "axios";
 import store from "../store";
 import router from "../router";
-
-export const baseURL = "http://pcapi-xiaotuxian-front-devtest.itheima.net/";
+// 线上开发接口 https://apipc-xiaotuxian-front.itheima.net/
+// 开发接口 http://pcapi-xiaotuxian-front-devtest.itheima.net/
+export const baseURL = "https://apipc-xiaotuxian-front.itheima.net/";
 
 // 创建请求实例对象（不包含token）
 const instanceWithOutToken = axios.create({ baseURL });
