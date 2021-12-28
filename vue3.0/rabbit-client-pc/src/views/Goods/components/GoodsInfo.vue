@@ -14,7 +14,7 @@
       <dt>配送</dt>
       <dd>
         至
-        <XtxCity />
+        <XtxCity @onCityChanged="onCityChanged" />
       </dd>
     </dl>
     <dl>
@@ -44,6 +44,12 @@ export default {
     onUpdated(() => {
       console.log(props.goodsDetailList);
     });
+    const onCityChanged = (city) => {
+      console.log(city);
+    };
+    return {
+      onCityChanged,
+    };
   },
 };
 </script>

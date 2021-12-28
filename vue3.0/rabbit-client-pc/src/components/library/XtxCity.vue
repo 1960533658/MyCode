@@ -1,8 +1,8 @@
 <template>
   <div ref="target" class="xtx-city">
     <div :class="{ active: cityVisible }" class="select" @click="toggle">
-      <span class="placeholder">请选择配送地址</span>
-      <span class="value"></span>
+      <span v-if="!location" class="placeholder">请选择配送地址</span>
+      <span v-else class="value">{{ location }}</span>
       <i class="iconfont icon-angle-down"></i>
     </div>
     <div v-if="cityVisible" class="option">
@@ -47,7 +47,7 @@ export default {
       cityVisible.value = false;
       // 判断用户是否选择了完整的生市级数据
       if (selectedCityData.countName) {
-        location.value = `${selectedCityData.provinceName} ${selectedCityData.cityCode} ${selectedCityData.countName}`;
+        location.value = `${selectedCityData.provinceName} ${selectedCityData.cityName} ${selectedCityData.countName}`;
       }
       // 每当页面隐藏重置用户的选择
       for (let attr in selectedCityData) {
@@ -128,6 +128,7 @@ export default {
       cityData,
       updateSelectCity,
       list,
+      location,
     };
   },
 };

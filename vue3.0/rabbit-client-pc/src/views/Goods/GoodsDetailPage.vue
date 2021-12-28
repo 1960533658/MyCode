@@ -26,6 +26,11 @@
           <div class="spec">
             <!-- 商品 详细信息 -->
             <GoodsInfo :goodsDetailList="goodsDetailList" />
+            <GoodsSku
+              v-if="goodsDetailList"
+              :skus="goodsDetailList.skus"
+              :specs="goodsDetailList.specs"
+            />
           </div>
         </div>
         <!-- 商品推荐 -->
@@ -55,10 +60,18 @@ import { onBeforeRouteUpdate, useRoute } from "vue-router";
 import GoodsImages from "./components/GoodsImages";
 import GoodsSales from "./components/GoodsSales";
 import GoodsInfo from "./components/GoodsInfo";
+import GoodsSku from "./components/GoodsSku";
 
 export default {
   name: "GoodsDetailPage",
-  components: { GoodsInfo, GoodsSales, GoodsImages, GoodsRelevant, AppLayout },
+  components: {
+    GoodsSku,
+    GoodsInfo,
+    GoodsSales,
+    GoodsImages,
+    GoodsRelevant,
+    AppLayout,
+  },
   setup() {
     //#region  获取详细商品数据
     const { goodsDetailList, getData } = useGoodsDetail();
