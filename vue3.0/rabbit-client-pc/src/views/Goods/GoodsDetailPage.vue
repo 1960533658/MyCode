@@ -26,12 +26,23 @@
           <div class="spec">
             <!-- 商品 详细信息 -->
             <GoodsInfo :goodsDetailList="goodsDetailList" />
+            <!-- 商品规格组件 -->
             <GoodsSku
               v-if="goodsDetailList"
               :skus="goodsDetailList.skus"
               :specs="goodsDetailList.specs"
               @onSpecChange="onSpecChange"
             />
+            <!-- 商品数量组件 -->
+            <XtxNumberBox
+              v-model="goodsCount"
+              :max="goodsDetailList?.inventory"
+              label="数量"
+            />
+            <!-- 按钮组件 -->
+            <XtxButton :style="{ 'margin-top': '20px' }" type="primary"
+              >加入购物车
+            </XtxButton>
           </div>
         </div>
         <!-- 商品推荐 -->
@@ -40,7 +51,7 @@
         <div class="goods-footer">
           <div class="goods-article">
             <!-- 商品+评价 -->
-            <div class="goods-tabs"></div>
+            <GoodsTab />
             <!-- 注意事项 -->
             <div class="goods-warn"></div>
           </div>
@@ -62,10 +73,12 @@ import GoodsImages from "./components/GoodsImages";
 import GoodsSales from "./components/GoodsSales";
 import GoodsInfo from "./components/GoodsInfo";
 import GoodsSku from "./components/GoodsSku";
+import GoodsTab from "./components/GoodsTab";
 
 export default {
   name: "GoodsDetailPage",
   components: {
+    GoodsTab,
     GoodsSku,
     GoodsInfo,
     GoodsSales,
@@ -76,7 +89,6 @@ export default {
   setup() {
     //#region  获取详细商品数据
     const { goodsDetailList, getData } = useGoodsDetail();
-
     //#endregion
 
     //#region  当用户选择完整的规格之后 更新视图
@@ -88,10 +100,16 @@ export default {
     }
 
     //#endregion
+
+    //#region  商品数量组件
+    // 设置默认数据
+    const goodsCount = ref(1);
+    //#endregion
     return {
       goodsDetailList,
       getData,
       onSpecChange,
+      goodsCount,
     };
   },
 };
