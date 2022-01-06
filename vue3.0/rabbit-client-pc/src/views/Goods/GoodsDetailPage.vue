@@ -46,17 +46,24 @@
           </div>
         </div>
         <!-- 商品推荐 -->
-        <GoodsRelevant></GoodsRelevant>
+        <GoodsRelevant
+          v-if="goodsDetailList"
+          :goodsId="goodsDetailList.id"
+        ></GoodsRelevant>
         <!-- 商品详情 -->
         <div class="goods-footer">
           <div class="goods-article">
             <!-- 商品+评价 -->
-            <GoodsTab />
+            <GoodsTab v-if="goodsDetailList" />
             <!-- 注意事项 -->
-            <div class="goods-warn"></div>
+            <GoodsWarn />
           </div>
           <!-- 24热榜 -->
-          <div class="goods-aside"></div>
+          <div class="goods-aside">
+            <GoodsHot :type="1" />
+            <GoodsHot :type="2" />
+            <GoodsHot :type="3" />
+          </div>
         </div>
       </div>
     </div>
@@ -66,7 +73,7 @@
 <script>
 import GoodsRelevant from "./components/GoodsRelevant";
 import AppLayout from "../../components/AppLayout";
-import { ref } from "vue";
+import { provide, ref } from "vue";
 import { getGoodsDetailById } from "../../api/goods";
 import { onBeforeRouteUpdate, useRoute } from "vue-router";
 import GoodsImages from "./components/GoodsImages";
@@ -74,10 +81,14 @@ import GoodsSales from "./components/GoodsSales";
 import GoodsInfo from "./components/GoodsInfo";
 import GoodsSku from "./components/GoodsSku";
 import GoodsTab from "./components/GoodsTab";
+import GoodsHot from "./components/GoodsHot";
+import GoodsWarn from "./components/GoodsWarn";
 
 export default {
   name: "GoodsDetailPage",
   components: {
+    GoodsWarn,
+    GoodsHot,
     GoodsTab,
     GoodsSku,
     GoodsInfo,
@@ -104,6 +115,11 @@ export default {
     //#region  商品数量组件
     // 设置默认数据
     const goodsCount = ref(1);
+    console.log(goodsDetailList);
+    //#endregion
+
+    //#region  开放商品数据给子组件使用
+    provide("goodsDetailList", goodsDetailList);
     //#endregion
     return {
       goodsDetailList,
