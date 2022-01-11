@@ -5,6 +5,7 @@ const HomePage = () => import("../views/Home/HomePage");
 const TopCategoryPage = () => import("../views/Category/TopCategoryPage");
 const SubCateGoryPage = () => import("../views/Category/SubCateGoryPage");
 const GoodsDetailPage = () => import("../views/Goods/GoodsDetailPage");
+const LoginPage = () => import("../views/Login/LoginPage");
 
 const routes = [
   // 首页
@@ -15,6 +16,8 @@ const routes = [
   { path: "/category/sub/:id", component: SubCateGoryPage },
   // 商品详情页面
   { path: "/goods/:id", component: GoodsDetailPage },
+  // 登录页面
+  { path: "/login", component: LoginPage },
 ];
 
 const router = createRouter({
