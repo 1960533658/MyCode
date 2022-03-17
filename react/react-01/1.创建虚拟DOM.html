@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>创建虚拟DOM</title>
+  <script src="./js/react.production.min.js"></script>
+  <script src="./js/react-dom.production.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+  <script>
+    console.log(React)
+    const title = React.createElement("h1", null, "my Blog");
+    const SubTitle = React.createElement("h2", null, "my first blog post");
+    const paragraph = React.createElement(
+      "p",
+      {className: "text"},
+      "This is the content of my post"
+    );
+    const artcle = React.createElement("article", null, SubTitle, paragraph);
+    const main = React.createElement("main", {id: "main"}, title, artcle);
+    ReactDOM.render(main, document.getElementById("root"))
+  </script>
+</body>
+</html>
