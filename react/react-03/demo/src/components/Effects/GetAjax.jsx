@@ -11,11 +11,15 @@ const GetAjax = () => {
         console.log(response);
       })
   }, [])
+  const handleUpdate = () => {
+
+  }
   return (
     <div className="father">
       <h1>GetAjax函数组件模板</h1>
       <div>{count}</div>
       <button onClick={handleClick}>Effect中的代码只在初始化渲染的时候执行一次</button>
+      <button onClick={handleUpdate}>aa</button>
     </div>
   )
 }

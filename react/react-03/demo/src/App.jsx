@@ -2,7 +2,7 @@
 
 
 // useEffect 初始化获取数据
-// import GetAjax from "./components/Effects/GetAjax";
+import GetAjax from "./components/Effects/GetAjax";
 
 // useEffect 当组件卸载时删除清除定时器
 // import UseEffectSetInterval from "./components/Effects/UseSetInterval";
@@ -26,7 +26,7 @@ function App() {
   return (
     <div className="App">
       {/* useEffect 初始化获取数据 */}
-      {/* <GetAjax /> */}
+      <GetAjax />
 
       {/* useEffect 组件销毁时清除定时器 */}
       {/* <button onClick={handleClick}>销毁子组件组件</button>
