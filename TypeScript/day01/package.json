@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "axios": "^0.27.2"
+  },
+  "name": "day01",
+  "version": "1.0.0",
+  "main": "01.createTS.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon 01.createTS.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
