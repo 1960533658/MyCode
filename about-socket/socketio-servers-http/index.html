@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  haha
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    let socket = io("ws://localhost:3000")
+    // 接收用户初次连接时发送的信息
+    socket.on("send", (data) => {
+      console.log(data)
+    })
+    // 触发事件 想后端发送是数据
+    socket.emit("say hi", {msg: "你好"})
+  </script>
+</body>
+</html>
